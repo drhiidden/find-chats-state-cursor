@@ -1,0 +1,100 @@
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+.env
+.venv
+env.bak/
+venv.bak/
+
+# Archivos de IDE y editores
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Archivos de base de datos SQLite
+*.db
+*.sqlite
+*.sqlite3
+*.vscdb
+*-journal
+
+# Archivos de estado de Cursor
+workspaceStorage/
+*.cursor
+
+# Logs y archivos temporales
+*.log
+*.tmp
+*.temp
+logs/
+temp/
+
+# Archivos de configuración local
+.env
+.env.local
+config.local.json
+
+# Distribution / packaging
+*.egg-info/
+
+# Backup files created by the script
+*.bak
+
+# Local development settings
+.env.local
+
+# Dependencias
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Compilación
+out/
+dist/
+*.vsix
+*.vsix.bak
+
+# TypeScript
+*.tsbuildinfo
+
+# Archivos de desarrollo
+coverage/
+.nyc_output/
+.eslintcache
+
+# Archivos de sistema
+Thumbs.db
+desktop.ini
+
+# Archivos de respaldo
+*.backup
+*~ 
