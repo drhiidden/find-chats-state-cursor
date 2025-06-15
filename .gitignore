@@ -98,3 +98,5 @@ desktop.ini
 # Archivos de respaldo
 *.backup
 *~ 
+
+docs/
