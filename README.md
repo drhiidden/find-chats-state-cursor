@@ -37,6 +37,7 @@ Into:
 - **IDE-Agnostic**: Works with Cursor (implemented), Claude Code & Continue.dev (planned)
 - **Smart Renaming**: Date + time + topic + short UUID for easy browsing
 - **Recursive Organization**: Automatically finds and organizes nested transcripts (subagents)
+- **Cleanup Tools**: Remove empty folders (MCP, agent-tools, etc.) to keep workspace tidy
 - **Flexible Architecture**: Decoupled collection and organization strategies for extensibility
 - **Auto Summaries**: Generates markdown summaries with statistics
 - **Batch Processing**: Organize hundreds of transcripts in seconds
@@ -45,6 +46,7 @@ Into:
 - **Rich Statistics**: Analyze token usage, activity patterns, and more
 - **Multiple Export Formats**: Markdown, JSON, HTML, CJSON
 - **Search**: Find conversations by content, date, or metadata
+- **Smart Navigation**: Fuzzy search projects with context differentiation for workspaces
 - **Standards Compliant**: Follows AITS v1.0 (AI Transcript Standard)
 
 ## 🔧 Supported IDEs
@@ -120,11 +122,14 @@ cursor-org list-ides
 ### 2. Preview Changes (Dry-Run)
 
 ```bash
-# Auto-detects IDE from path
-cursor-org organize /path/to/transcripts
+# List all projects
+cursor-org projects
 
-# Or specify IDE explicitly
-cursor-org organize /path/to/transcripts --ide cursor
+# Navigate to a project
+cursor-org goto myproject
+
+# Preview organization changes
+cursor-org organize /path/to/transcripts
 ```
 
 This shows what would be renamed without making changes.
@@ -142,7 +147,20 @@ cursor-org organize C:\Users\YourName\.cursor\projects\your-project\agent-transc
 cursor-org organize /path/to/transcripts --apply --no-recursive
 ```
 
-### 4. Generate Summaries
+### 4. Clean Up Empty Folders
+
+```bash
+# Preview cleanup
+cursor-org clean /path/to/transcripts
+
+# Apply cleanup
+cursor-org clean /path/to/transcripts --apply
+
+# Clean all projects
+cursor-org clean . --all --apply
+```
+
+### 5. Generate Summaries
 
 Summaries are generated automatically when organizing. Each transcript gets a `summary.md` file with:
 - Duration, message count, token usage
@@ -166,13 +184,18 @@ Shows:
 
 | Command | Description | Example |
 |---------|-------------|---------|
+| `projects` | List all Cursor projects | `cursor-org projects` |
+| `projects --pending` | Show projects needing organization | `cursor-org projects --pending` |
+| `goto` | Navigate to project by name/index | `cursor-org goto myproject` |
 | `inspect` | Preview metadata of a single transcript | `cursor-org inspect path/to/chat.jsonl` |
 | `organize` | Batch rename transcripts (recursive by default) | `cursor-org organize path/to/transcripts --apply` |
 | `organize --no-recursive` | Organize only top-level transcripts | `cursor-org organize path/to/transcripts --apply --no-recursive` |
+| `clean` | Remove empty folders (MCP, agent-tools, etc.) | `cursor-org clean path/to/transcripts --apply` |
+| `clean --all` | Clean all projects at once | `cursor-org clean . --all --apply` |
 | `stats` | Show statistics | `cursor-org stats path/to/transcripts` |
 | `search` | Search by content | `cursor-org search path/to/transcripts -q "authentication"` |
 | `export` | Export to different formats | `cursor-org export chat.jsonl --format html` |
-| `clean` | Archive old transcripts | `cursor-org clean path/to/transcripts --older-than-days 90` |
+| `list-ides` | List supported IDEs | `cursor-org list-ides` |
 | `version` | Show version | `cursor-org version` |
 
 ### Recursive Organization
