@@ -69,11 +69,10 @@ def calculate_statistics(transcripts_dir: Path) -> Dict[str, Any]:
             day_str = metadata.start_time.strftime("%Y-%m-%d")
             activity_by_day[day_str] += 1
 
-            # Token usage
-            messages = parser._read_messages()
-            tokens = _extract_token_usage(messages)
-            total_input_tokens += tokens["input"]
-            total_output_tokens += tokens["output"]
+            # Token usage (from metadata if available)
+            if metadata.tokens:
+                total_input_tokens += metadata.tokens.get("input", 0)
+                total_output_tokens += metadata.tokens.get("output", 0)
 
         except Exception as e:
             console.print(f"[yellow]Warning: Failed to parse {jsonl_file.name}: {e}[/yellow]")

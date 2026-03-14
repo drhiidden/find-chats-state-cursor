@@ -1,0 +1,141 @@
+{
+  "summary": {
+    "total_transcripts": 10,
+    "avg_time_ms": 2.6411100009378665,
+    "avg_speed_msgs_sec": 6891.21283306554
+  },
+  "by_category": {
+    "SMALL": {
+      "count": 9,
+      "avg_time_ms": 1.9166185197213457,
+      "avg_msgs": 12.88888888888889
+    },
+    "MEDIUM": {
+      "count": 1,
+      "avg_time_ms": 9.161533331886554,
+      "avg_msgs": 68.0
+    }
+  },
+  "details": [
+    {
+      "path": "C:\\Users\\druiz\\.cursor\\projects\\c-Users-druiz-Documents-Laboratorio-xokito-code-workspace\\agent-transcripts\\6d39062e-fae5-46d0-b7c7-54bb04992f8f\\6d39062e-fae5-46d0-b7c7-54bb04992f8f.jsonl",
+      "name": "6d39062e-fae5-46d0-b7c7-54bb04992f8f.jsonl",
+      "file_size_kb": 29.1201171875,
+      "line_count": 31,
+      "message_count": 31,
+      "category": "SMALL",
+      "avg_time_ms": 5.016100001133357,
+      "min_time_ms": 4.500000010011718,
+      "max_time_ms": 6.025499984389171,
+      "msgs_per_sec": 6180.10007635329
+    },
+    {
+      "path": "C:\\Users\\druiz\\.cursor\\projects\\c-Users-druiz-Documents-Laboratorio-waito-ide-code-workspace\\agent-transcripts\\45aa50f9-d98b-404f-bc3d-c591838fa7a1\\45aa50f9-d98b-404f-bc3d-c591838fa7a1.jsonl",
+      "name": "45aa50f9-d98b-404f-bc3d-c591838fa7a1.jsonl",
+      "file_size_kb": 67.37890625,
+      "line_count": 68,
+      "message_count": 68,
+      "category": "MEDIUM",
+      "avg_time_ms": 9.161533331886554,
+      "min_time_ms": 9.093900007428601,
+      "max_time_ms": 9.281200007535517,
+      "msgs_per_sec": 7422.338328817427
+    },
+    {
+      "path": "C:\\Users\\druiz\\.cursor\\projects\\c-Users-druiz-Documents-Laboratorio-waito-ide-code-workspace\\agent-transcripts\\45aa50f9-d98b-404f-bc3d-c591838fa7a1\\subagents\\0ddf779f-fdcc-4153-97f0-832605305796.jsonl",
+      "name": "0ddf779f-fdcc-4153-97f0-832605305796.jsonl",
+      "file_size_kb": 5.6865234375,
+      "line_count": 8,
+      "message_count": 8,
+      "category": "SMALL",
+      "avg_time_ms": 1.1517666765333463,
+      "min_time_ms": 1.1235999991185963,
+      "max_time_ms": 1.185900007840246,
+      "msgs_per_sec": 6945.851241398007
+    },
+    {
+      "path": "C:\\Users\\druiz\\.cursor\\projects\\c-Users-druiz-Documents-Laboratorio-waito-ide-code-workspace\\agent-transcripts\\45aa50f9-d98b-404f-bc3d-c591838fa7a1\\subagents\\159cce5f-cf13-47b2-a71c-4033f64f3b04.jsonl",
+      "name": "159cce5f-cf13-47b2-a71c-4033f64f3b04.jsonl",
+      "file_size_kb": 13.19140625,
+      "line_count": 14,
+      "message_count": 14,
+      "category": "SMALL",
+      "avg_time_ms": 2.4046333273872733,
+      "min_time_ms": 2.3080999962985516,
+      "max_time_ms": 2.5308000040240586,
+      "msgs_per_sec": 5822.093472858724
+    },
+    {
+      "path": "C:\\Users\\druiz\\.cursor\\projects\\c-Users-druiz-Documents-Laboratorio-waito-ide-code-workspace\\agent-transcripts\\45aa50f9-d98b-404f-bc3d-c591838fa7a1\\subagents\\221ea52f-1d3f-49c2-a972-11e9b8461b1f.jsonl",
+      "name": "221ea52f-1d3f-49c2-a972-11e9b8461b1f.jsonl",
+      "file_size_kb": 3.8427734375,
+      "line_count": 6,
+      "message_count": 6,
+      "category": "SMALL",
+      "avg_time_ms": 0.8276333392132074,
+      "min_time_ms": 0.8080000116024166,
+      "max_time_ms": 0.8607000054325908,
+      "msgs_per_sec": 7249.587124781515
+    },
+    {
+      "path": "C:\\Users\\druiz\\.cursor\\projects\\c-Users-druiz-Documents-Laboratorio-waito-ide-code-workspace\\agent-transcripts\\45aa50f9-d98b-404f-bc3d-c591838fa7a1\\subagents\\316c12d2-0ffb-497c-acb7-10bd52c5d387.jsonl",
+      "name": "316c12d2-0ffb-497c-acb7-10bd52c5d387.jsonl",
+      "file_size_kb": 11.54296875,
+      "line_count": 18,
+      "message_count": 18,
+      "category": "SMALL",
+      "avg_time_ms": 1.9710000099924705,
+      "min_time_ms": 1.9450000254437327,
+      "max_time_ms": 1.9867000228259712,
+      "msgs_per_sec": 9132.420045025146
+    },
+    {
+      "path": "C:\\Users\\druiz\\.cursor\\projects\\c-Users-druiz-Documents-Laboratorio-waito-ide-code-workspace\\agent-transcripts\\45aa50f9-d98b-404f-bc3d-c591838fa7a1\\subagents\\3abe16d2-3fdf-4ff9-804c-6ff0aaf9d66c.jsonl",
+      "name": "3abe16d2-3fdf-4ff9-804c-6ff0aaf9d66c.jsonl",
+      "file_size_kb": 4.3857421875,
+      "line_count": 5,
+      "message_count": 5,
+      "category": "SMALL",
+      "avg_time_ms": 1.0498666573160638,
+      "min_time_ms": 0.9740999958012253,
+      "max_time_ms": 1.0950999858323485,
+      "msgs_per_sec": 4762.509567436185
+    },
+    {
+      "path": "C:\\Users\\druiz\\.cursor\\projects\\c-Users-druiz-Documents-Laboratorio-waito-ide-code-workspace\\agent-transcripts\\45aa50f9-d98b-404f-bc3d-c591838fa7a1\\subagents\\3bc4bbba-df7a-4709-bfe6-985bcc7495bf.jsonl",
+      "name": "3bc4bbba-df7a-4709-bfe6-985bcc7495bf.jsonl",
+      "file_size_kb": 11.220703125,
+      "line_count": 22,
+      "message_count": 22,
+      "category": "SMALL",
+      "avg_time_ms": 1.7918333275398861,
+      "min_time_ms": 1.756099984049797,
+      "max_time_ms": 1.816000003600493,
+      "msgs_per_sec": 12277.927674336262
+    },
+    {
+      "path": "C:\\Users\\druiz\\.cursor\\projects\\c-Users-druiz-Documents-Laboratorio-waito-ide-code-workspace\\agent-transcripts\\45aa50f9-d98b-404f-bc3d-c591838fa7a1\\subagents\\57d99cd9-2fab-492b-97ea-7ae834669b85.jsonl",
+      "name": "57d99cd9-2fab-492b-97ea-7ae834669b85.jsonl",
+      "file_size_kb": 4.728515625,
+      "line_count": 6,
+      "message_count": 6,
+      "category": "SMALL",
+      "avg_time_ms": 0.9639000054448843,
+      "min_time_ms": 0.9456000116188079,
+      "max_time_ms": 0.9777999948710203,
+      "msgs_per_sec": 6224.712071902856
+    },
+    {
+      "path": "C:\\Users\\druiz\\.cursor\\projects\\c-Users-druiz-Documents-Laboratorio-waito-ide-code-workspace\\agent-transcripts\\45aa50f9-d98b-404f-bc3d-c591838fa7a1\\subagents\\5c3b3dff-3d2b-45f3-b403-52afe57be21c.jsonl",
+      "name": "5c3b3dff-3d2b-45f3-b403-52afe57be21c.jsonl",
+      "file_size_kb": 10.9951171875,
+      "line_count": 6,
+      "message_count": 6,
+      "category": "SMALL",
+      "avg_time_ms": 2.072833332931623,
+      "min_time_ms": 1.9672999915201217,
+      "max_time_ms": 2.226300013717264,
+      "msgs_per_sec": 2894.5887277459774
+    }
+  ]
+}
