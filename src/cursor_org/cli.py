@@ -271,5 +271,171 @@ def list_ides():
     _list_ides()
 
 
+@app.command()
+def projects(
+    filter_type: str = typer.Option(
+        None, "--filter", help="Filter by type: workspace, json, or show all (default)"
+    ),
+    only_pending: bool = typer.Option(
+        False, "--pending", help="Show only projects with unorganized transcripts"
+    ),
+    create_shortcut: str = typer.Option(
+        None, "--shortcut", help="Create PowerShell shortcut for quick access (e.g., 'goto-myproject')"
+    )
+):
+    """
+    List all Cursor projects with transcripts and create navigation shortcuts.
+    
+    Use this to easily find and access projects without typing long paths.
+    
+    Examples:
+        cursor-org projects                      # List all projects
+        cursor-org projects --pending            # Only show projects needing organization
+        cursor-org projects --filter workspace   # Only show code-workspace projects
+        cursor-org projects --shortcut goto-fc   # Create shortcut for find-chats project
+    """
+    from .navigation import list_cursor_projects, display_projects_table, create_shortcut as make_shortcut
+    
+    projects_list = list_cursor_projects()
+    
+    if not projects_list:
+        console.print("[yellow]No Cursor projects found with transcripts[/yellow]")
+        return
+    
+    # Apply filters
+    if filter_type:
+        if filter_type.lower() == "workspace":
+            projects_list = [p for p in projects_list if "workspace" in p['name'].lower()]
+        elif filter_type.lower() == "json":
+            projects_list = [p for p in projects_list if "json" in p['name'].lower()]
+    
+    if only_pending:
+        projects_list = [p for p in projects_list if p['organized_count'] < p['transcript_count']]
+    
+    display_projects_table(projects_list)
+    
+    if create_shortcut:
+        # Ask which project
+        console.print(f"\n[bold]Enter project number or name to create shortcut '{create_shortcut}':[/bold]")
+        
+        # For now, try to find by partial match
+        # In future, could make interactive
+        console.print("[dim]Tip: Use project name from the table above[/dim]")
+
+
+@app.command()
+def goto(
+    project: str = typer.Argument(
+        ..., help="Project name or number from 'cursor-org projects' command"
+    )
+):
+    """
+    Print the path to a project's transcripts for easy navigation.
+    
+    Usage:
+        cd $(cursor-org goto find-chats)        # Unix/Mac
+        cd (cursor-org goto find-chats)         # PowerShell
+        
+    Or just copy the path:
+        cursor-org goto find-chats
+    """
+    from .navigation import get_project_by_name, get_project_by_index
+    
+    # Try as index first
+    try:
+        index = int(project)
+        proj = get_project_by_index(index)
+    except ValueError:
+        # Try as name
+        proj = get_project_by_name(project)
+    
+    if not proj:
+        console.print(f"[red]Project not found:[/red] {project}")
+        console.print("[dim]Run 'cursor-org projects' to see available projects[/dim]")
+        raise typer.Exit(code=1)
+    
+    # Print the path (can be used with cd)
+    console.print(str(proj['transcripts_dir']))
+
+
+@app.command()
+def clean(
+    target_dir: Path = typer.Argument(
+        ..., help="Directory to clean up", exists=True
+    ),
+    apply: bool = typer.Option(
+        False, "--apply", help="Actually delete folders (default is dry-run)"
+    ),
+    max_depth: int = typer.Option(
+        3, "--max-depth", help="Maximum depth to scan for cleanup"
+    ),
+    all_projects: bool = typer.Option(
+        False, "--all", help="Clean all Cursor projects"
+    ),
+):
+    """
+    Clean up empty and irrelevant folders (MCP, agent-tools, etc.).
+    
+    Identifies and removes:
+    - Empty folders (no files)
+    - MCP folders without transcripts
+    - agent-tools folders without content
+    - Folders with only hidden/system files
+    
+    Examples:
+        cursor-org clean /path/to/transcripts              # Dry-run (preview)
+        cursor-org clean /path/to/transcripts --apply      # Actually delete
+        cursor-org clean /path/to/transcripts --all        # Clean all projects
+    """
+    from .cleanup import TranscriptCleaner, clean_all_projects
+    
+    if all_projects:
+        # Clean all projects
+        console.print("[bold]Cleaning all Cursor projects...[/bold]\n")
+        
+        all_results = clean_all_projects(dry_run=not apply, max_depth=max_depth)
+        
+        if not all_results:
+            console.print("[green]No folders to clean up in any project![/green]")
+            return
+        
+        # Display results per project
+        for proj_name, results in all_results.items():
+            console.print(f"\n[bold cyan]Project: {proj_name}[/bold cyan]")
+            
+            from rich.table import Table
+            table = Table(show_header=True)
+            table.add_column("Path", style="yellow")
+            table.add_column("Reason", style="dim")
+            table.add_column("Size", style="cyan", justify="right")
+            
+            for result in results:
+                table.add_row(
+                    result.path.name,
+                    result.reason,
+                    f"{result.size_kb:.1f} KB"
+                )
+            
+            console.print(table)
+        
+        # Overall summary
+        total_folders = sum(len(r) for r in all_results.values())
+        total_size = sum(r.size_kb for results in all_results.values() for r in results)
+        
+        console.print(f"\n[bold]Overall:[/bold]")
+        console.print(f"  Projects affected: {len(all_results)}")
+        console.print(f"  Total folders: {total_folders}")
+        console.print(f"  Total size: {total_size:.1f} KB ({total_size/1024:.2f} MB)")
+        
+        if not apply:
+            console.print(f"\n[yellow]DRY RUN - Run with --apply to delete[/yellow]")
+    
+    else:
+        # Clean single directory
+        cleaner = TranscriptCleaner(target_dir, dry_run=not apply)
+        cleaner.clean(max_depth=max_depth)
+        cleaner.display_results()
+
+
 if __name__ == "__main__":
     app()

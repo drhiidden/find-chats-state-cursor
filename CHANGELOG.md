@@ -11,6 +11,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Current version undergoing personal validation
 - Public release pending successful testing
 
+### 🎉 Added (2026-03-14)
+- **Cleanup Command**: New `clean` command to remove empty/irrelevant folders
+  - Identifies empty folders, MCP folders, agent-tools folders
+  - Removes folders with only hidden/system files
+  - Protected folders list to prevent accidental deletion
+  - Dry-run by default with `--apply` option
+  - Batch cleanup with `--all` flag for all projects
+  - Depth control with `--max-depth` option
+  - Rich table output showing what will be deleted
+  
+- **PowerShell Helper**: New `ctc` function for quick cleanup
+  - `ctc [project]` - Preview cleanup
+  - `ctc [project] -Apply` - Apply cleanup
+  - `ctc -All` - Preview cleanup for all projects
+  - `ctc -All -Apply` - Clean all projects
+
+### 📚 Documentation (2026-03-14)
+- Added comprehensive cleanup guide (`.procontext/docs/CLEANUP-GUIDE.md`)
+- Added cleanup implementation details (`.procontext/implementation/CLEANUP-IMPLEMENTATION.md`)
+- Updated README with cleanup command
+- Updated PowerShell helpers with cleanup function
+
+### 🧪 Testing (2026-03-14)
+- Added 14 comprehensive cleanup tests (`tests/test_cleanup.py`)
+- All 120 tests passing
+- 100% test coverage for cleanup module
+
 ---
 
 ## [0.3.0-beta] - 2026-03-14
