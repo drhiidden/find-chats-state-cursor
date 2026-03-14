@@ -1,69 +1,221 @@
-# Cursor Workspace Manager
+# Cursor Transcript Organizer
 
-Este plugin para Cursor permite migrar la configuración y el historial de chats entre diferentes workspaces.
+A Python CLI tool to organize, rename, and summarize Cursor AI chat transcripts with human-readable names.
 
-## Características
+## 🎯 Problem
 
-- Migración automática de la configuración del workspace
-- Migración del historial de chats de IA
-- Migración de configuraciones específicas de Cursor
-- Interfaz gráfica para seleccionar el workspace de origen
+Cursor stores AI chat transcripts in folders with cryptic UUIDs like `b104cc43-a667-4487-9a6c-c5973777592a/`, making it impossible to find past conversations without opening each one.
 
-## Uso
+## ✨ Solution
 
-1. Abre el workspace de destino en Cursor
-2. Presiona `Ctrl+Shift+P` (o `Cmd+Shift+P` en macOS)
-3. Escribe **“Cursor Workspace Manager: Migrar Workspace”** y selecciona el comando
-4. Selecciona el workspace de origen de la lista
-5. Espera a que se complete la migración
-
-## Requisitos
-
-- Cursor IDE
-- Node.js 14 o superior
-
-## Desarrollo
-
-Si deseas compilar o modificar la extensión localmente:
-
-```bash
-# Instalar dependencias
-npm install
-
-# Compilar TypeScript → JavaScript en la carpeta `out/`
-npm run compile
-
-# Iniciar una ventana de desarrollo de extensiones (F5 en VS Code)
-# En la nueva ventana abre el proyecto de destino y ejecuta el comando
+This tool transforms:
+```
+b104cc43-a667-4487-9a6c-c5973777592a/
 ```
 
-Para generar un archivo `.vsix` listo para distribuir:
-
-```bash
-npm install -g @vscode/vsce
-vsce package
+Into:
+```
+2026-03-12_14h30_implement-auth-feature_b104cc43/
+  chat.jsonl
+  summary.md (auto-generated)
 ```
 
-Esto creará `cursor-workspace-manager-x.y.z.vsix` que puedes instalar siguiendo la sección de Instalación.
+## 🚀 Features
 
-## Instalación
+- **Smart Renaming**: Date + time + topic + short UUID for easy browsing
+- **Auto Summaries**: Generates markdown summaries with statistics
+- **Batch Processing**: Organize hundreds of transcripts in seconds
+- **Safe by Default**: Dry-run mode prevents accidental changes
+- **Rich Statistics**: Analyze token usage, activity patterns, and more
+- **Multiple Export Formats**: Markdown, JSON, HTML, CJSON
+- **Search**: Find conversations by content, date, or metadata
+- **Standards Compliant**: Follows AITS v1.0 (AI Transcript Standard)
 
-1. Descarga el archivo .vsix del plugin
-2. En Cursor, ve a la pestaña de extensiones
-3. Haz clic en los tres puntos (...) y selecciona "Instalar desde VSIX"
-4. Selecciona el archivo .vsix descargado
+## 📦 Installation
 
-## Notas
+### Prerequisites
+- Python 3.10+
+- Cursor IDE (or compatible AI coding assistant)
 
-- El plugin requiere que Cursor esté cerrado durante la migración
-- Se recomienda hacer una copia de seguridad antes de realizar la migración
-- La migración puede tardar varios minutos dependiendo del tamaño del workspace
+### Install from source
 
-## Problemas conocidos
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/cursor-transcript-organizer.git
+cd cursor-transcript-organizer
 
-- La migración puede fallar si hay archivos bloqueados por Cursor
-- Algunas configuraciones específicas pueden no migrarse correctamente
+# Create virtual environment
+python -m venv .venv
 
-## Contribuir
+# Activate (Windows)
+.venv\Scripts\activate
 
-Las contribuciones son bienvenidas. Por favor, abre un issue para reportar problemas o sugerir mejoras. 
+# Activate (Unix/Mac)
+source .venv/bin/activate
+
+# Install in editable mode
+pip install -e .
+```
+
+## 🎮 Quick Start
+
+### 1. Preview Changes (Dry-Run)
+
+```bash
+cursor-org organize C:\Users\YourName\.cursor\projects\your-project\agent-transcripts
+```
+
+This shows what would be renamed without making changes.
+
+### 2. Apply Changes
+
+```bash
+cursor-org organize C:\Users\YourName\.cursor\projects\your-project\agent-transcripts --apply
+```
+
+### 3. Generate Summaries
+
+Summaries are generated automatically when organizing. Each transcript gets a `summary.md` file with:
+- Duration, message count, token usage
+- Key topics discussed
+- Files modified (when available)
+- Outcome status
+
+### 4. View Statistics
+
+```bash
+cursor-org stats C:\Users\YourName\.cursor\projects\your-project\agent-transcripts
+```
+
+Shows:
+- Total sessions and messages
+- Token usage breakdown
+- Most frequent topics
+- Activity by day
+
+## 📚 Commands
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `inspect` | Preview metadata of a single transcript | `cursor-org inspect path/to/chat.jsonl` |
+| `organize` | Batch rename transcripts | `cursor-org organize path/to/transcripts --apply` |
+| `stats` | Show statistics | `cursor-org stats path/to/transcripts` |
+| `search` | Search by content | `cursor-org search path/to/transcripts -q "authentication"` |
+| `export` | Export to different formats | `cursor-org export chat.jsonl --format html` |
+| `clean` | Archive old transcripts | `cursor-org clean path/to/transcripts --older-than-days 90` |
+| `version` | Show version | `cursor-org version` |
+
+## 🔧 Configuration
+
+### Metadata Enhancement (Optional)
+
+For richer metadata, you can add markers to your Cursor conversations:
+
+**At the start** (optional):
+```markdown
+<session_metadata>
+ROLE: Backend Developer
+GOAL: Implement user authentication
+CONTEXT: Sprint 23, following ADR-005
+</session_metadata>
+```
+
+**Before closing** (optional):
+```markdown
+<session_summary>
+STATUS: COMPLETED
+OUTCOME: Auth module implemented and tested
+FILES_MODIFIED:
+  - src/auth/login.py
+  - src/auth/utils.py
+  - tests/test_auth.py
+NEXT_STEPS:
+  - Update documentation
+  - Deploy to staging
+</session_summary>
+```
+
+These markers are parsed automatically and enhance the generated summaries.
+
+## 📊 Output Structure
+
+After organizing, your transcripts will look like this:
+
+```
+agent-transcripts/
+├── 2026-03-14_10h30_implement-auth-feature_a1b2c3d4/
+│   ├── a1b2c3d4-full-uuid.jsonl
+│   └── summary.md
+├── 2026-03-14_15h45_fix-bug-in-parser_e5f6g7h8/
+│   ├── e5f6g7h8-full-uuid.jsonl
+│   └── summary.md
+└── 2026-03-13_09h00_refactor-database-layer_i9j0k1l2/
+    ├── i9j0k1l2-full-uuid.jsonl
+    └── summary.md
+```
+
+## 🧪 Development
+
+### Running Tests
+
+```bash
+pytest tests/ -v
+```
+
+### Code Quality
+
+```bash
+# Linting
+ruff check src/
+
+# Formatting
+ruff format src/
+```
+
+### Project Structure
+
+```
+cursor-transcript-organizer/
+├── src/cursor_org/
+│   ├── cli.py          # CLI interface
+│   ├── parser.py       # JSONL parser
+│   ├── models.py       # Data models
+│   ├── renamer.py      # Renaming logic
+│   ├── summary.py      # Summary generation
+│   ├── stats.py        # Statistics
+│   ├── exporters.py    # Export formats
+│   └── indexer.py      # Search indexing
+├── tests/              # Test suite
+├── pyproject.toml      # Project config
+└── README.md
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built for the [Cursor](https://cursor.com) community
+- Follows AITS v1.0 (AI Transcript Standard) for interoperability
+- Inspired by best practices from Claude Code, Amazon Q, and Tabnine
+
+## 📧 Contact
+
+- Issues: [GitHub Issues](https://github.com/yourusername/cursor-transcript-organizer/issues)
+- Discussions: [GitHub Discussions](https://github.com/yourusername/cursor-transcript-organizer/discussions)
+
+---
+
+**Status**: Pre-release (v0.3.0-beta)  
+**Note**: Currently in testing phase. Public release pending validation.
