@@ -48,6 +48,7 @@ class TranscriptCleaner:
         'node_modules',
         '.venv',
         'venv',
+        '.cursor-org-backups',
     }
     
     def __init__(self, root_dir: Path, dry_run: bool = True):
@@ -179,6 +180,10 @@ class TranscriptCleaner:
                     if not item.is_dir():
                         continue
                     
+                    # Skip protected folders entirely (don't even scan inside them)
+                    if item.name.lower() in self.PROTECTED_FOLDERS:
+                        continue
+                    
                     # Check if irrelevant
                     is_irrelevant, reason = self.is_irrelevant_folder(item)
                     
@@ -280,17 +285,19 @@ class TranscriptCleaner:
             console.print(f"\n[green]Successfully deleted {deleted_count}/{len(self.results)} folders[/green]")
 
 
-def clean_all_projects(dry_run: bool = True, max_depth: int = 3) -> Dict[str, List[CleanupResult]]:
+def clean_all_projects(dry_run: bool = True, max_depth: int = 3, create_backup: bool = True) -> Dict[str, List[CleanupResult]]:
     """Clean all Cursor projects.
     
     Args:
         dry_run: If True, only report what would be deleted
         max_depth: Maximum depth to scan in each project
+        create_backup: If True, create backups before deletion
         
     Returns:
         Dictionary mapping project names to their cleanup results
     """
     from .navigation import list_cursor_projects
+    from .backup import BackupManager
     
     projects = list_cursor_projects()
     all_results = {}
@@ -300,6 +307,26 @@ def clean_all_projects(dry_run: bool = True, max_depth: int = 3) -> Dict[str, Li
             # Skip empty projects
             continue
         
+        # Scan for folders to clean
+        cleaner_scan = TranscriptCleaner(proj['transcripts_dir'], dry_run=True)
+        folders_to_cleanup = cleaner_scan.scan_for_cleanup(max_depth=max_depth)
+        
+        if not folders_to_cleanup:
+            continue
+        
+        # Create backup if needed
+        if create_backup and not dry_run:
+            backup_manager = BackupManager(proj['transcripts_dir'])
+            backup_id = backup_manager.create_backup(
+                items_to_backup=[r.path for r in folders_to_cleanup],
+                operation_type='clean'
+            )
+            
+            if backup_id is None:
+                console.print(f"[yellow]Warning:[/yellow] Backup failed for {proj['name']}, skipping")
+                continue
+        
+        # Perform cleanup
         cleaner = TranscriptCleaner(proj['transcripts_dir'], dry_run=dry_run)
         results = cleaner.clean(max_depth=max_depth)
         

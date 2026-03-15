@@ -27,7 +27,7 @@ def list_ides():
     for ide_name, description in supported_ides.items():
         paths = IDE_DEFAULT_PATHS.get(ide_name, [])
         
-        if ide_name == "cursor":
+        if ide_name in ["cursor", "claude"]:
             status = "[OK] Implemented"
         else:
             status = "[WIP] Planned"
