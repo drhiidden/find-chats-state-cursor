@@ -144,9 +144,8 @@ IDE_DEFAULT_PATHS = {
         "%APPDATA%/Cursor/User/projects/{project}/agent-transcripts",
     ],
     "claude": [
-        "~/Library/Application Support/Claude/chats",
-        "%APPDATA%/Claude/chats",
-        "~/.config/Claude/chats",
+        "~/.claude/projects/{project}/sessions",
+        "%USERPROFILE%/.claude/projects/{project}/sessions",
     ],
     "continue": [
         "~/.continue/sessions",
