@@ -13,12 +13,13 @@ from typing import Optional, Dict, Type
 
 from .base import BaseTranscriptParser, IDE_CONFIGS, FileStats
 from .cursor_parser import CursorParser
+from .claude_code_parser import ClaudeCodeParser
 
 # Registry of available parsers
 PARSERS: Dict[str, Type[BaseTranscriptParser]] = {
     "cursor": CursorParser,
+    "claude": ClaudeCodeParser,
     # Future parsers:
-    # "claude": ClaudeParser,
     # "continue": ContinueParser,
     # "cline": ClineParser,
 }
@@ -91,6 +92,7 @@ def get_ide_config(ide: str):
 __all__ = [
     "BaseTranscriptParser",
     "CursorParser",
+    "ClaudeCodeParser",
     "FileStats",
     "get_parser",
     "auto_detect_ide",
