@@ -11,6 +11,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Current version undergoing personal validation
 - Public release pending successful testing
 
+### 🎉 Added (2026-03-15)
+- **Backup & Undo System**: Full backup/restore functionality for safety
+  - Automatic backup before destructive operations (`organize --apply`, `clean --apply`)
+  - New `undo` command to restore from backups
+  - New `backups` command to manage backup history
+  - Backup metadata with operation details
+  - Smart cleanup of old backups (keeps last 10 by default)
+  - Disk space checking before backup creation
+  - Atomic operations (backup completes or fails entirely)
+  - `--no-backup` flag to skip backup for advanced users
+  - Backups stored in `.cursor-org-backups/` with timestamp format
+
+### 🧪 Testing (2026-03-15)
+- Added 26 comprehensive backup tests (`tests/test_backup.py`)
+- All tests passing (26/26)
+- Tests cover:
+  - Backup creation with single/multiple items
+  - Metadata serialization
+  - Restore operations
+  - Automatic cleanup of old backups
+  - Large file handling (1MB+)
+  - Concurrent backup operations
+  - Error handling and edge cases
+
+### 📚 Documentation (2026-03-15)
+- Updated README with backup/undo usage
+- Added safety notes to organize and clean commands
+- Documented backup structure and management
+
 ### 🎉 Added (2026-03-14)
 - **Cleanup Command**: New `clean` command to remove empty/irrelevant folders
   - Identifies empty folders, MCP folders, agent-tools folders

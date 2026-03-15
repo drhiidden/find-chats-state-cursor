@@ -18,7 +18,7 @@ from ..constants import (
     CONTENT_TYPE_TEXT,
 )
 from ..parser_utils import (
-    analyze_message_counts, extract_topic_from_messages,
+    analyze_message_counts, extract_topic_from_messages, extract_created_at,
     extract_model_info, calculate_token_usage, extract_git_info,
     detect_languages, extract_files_touched, detect_mode,
     generate_tags, extract_tool_calls, extract_thinking_blocks, count_subagents,
@@ -69,12 +69,15 @@ class CursorParser(BaseTranscriptParser):
         tool_calls_list = extract_tool_calls(messages)
         thinking_blocks = extract_thinking_blocks(messages)
         subagents = count_subagents(messages)
+        
+        # Extract timestamp from first message (prefer this over filesystem date)
+        created_at = extract_created_at(messages) or fs_stats.created
 
         return TranscriptMetadata(
             # AITS Tier 1: Essential
             schema_version=AITS_SCHEMA_VERSION,
             uuid=self.file_path.stem,
-            created_at=fs_stats.created,
+            created_at=created_at,
             
             # AITS Tier 2: Common
             title=title,
@@ -96,7 +99,7 @@ class CursorParser(BaseTranscriptParser):
             
             # Legacy fields (backward compatibility)
             file_path=self.file_path,
-            start_time=fs_stats.created,
+            start_time=created_at,
             end_time=fs_stats.modified,
             message_count=len(messages),
             user_messages=content_stats["user_count"],

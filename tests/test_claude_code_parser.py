@@ -21,7 +21,7 @@ def sample_claude_code_jsonl(tmp_path):
             "uuid": "sys-001",
             "timestamp": "2026-03-14T10:00:00.000Z",
             "sessionId": "abc123",
-            "cwd": "/home/user/myproject",
+            "cwd": "/home/<username>/myproject",
             "message": {
                 "role": "system",
                 "content": "You are Claude Code, an AI coding assistant..."
@@ -34,7 +34,7 @@ def sample_claude_code_jsonl(tmp_path):
             "parentUuid": "sys-001",
             "timestamp": "2026-03-14T10:00:15.000Z",
             "sessionId": "abc123",
-            "cwd": "/home/user/myproject",
+            "cwd": "/home/<username>/myproject",
             "message": {
                 "role": "user",
                 "content": "Add input validation to the createUser endpoint"
@@ -47,7 +47,7 @@ def sample_claude_code_jsonl(tmp_path):
             "parentUuid": "user-001",
             "timestamp": "2026-03-14T10:00:45.000Z",
             "sessionId": "abc123",
-            "cwd": "/home/user/myproject",
+            "cwd": "/home/<username>/myproject",
             "message": {
                 "role": "assistant",
                 "model": "claude-opus-4-5-20251101",
@@ -65,7 +65,7 @@ def sample_claude_code_jsonl(tmp_path):
                         "id": "toolu_01abc",
                         "name": "Read",
                         "input": {
-                            "file_path": "/home/user/myproject/src/routes/users.ts"
+                            "file_path": "/home/<username>/myproject/src/routes/users.ts"
                         }
                     }
                 ],
@@ -108,7 +108,7 @@ def sample_claude_code_jsonl(tmp_path):
                         "id": "toolu_02def",
                         "name": "Write",
                         "input": {
-                            "file_path": "/home/user/myproject/src/routes/users.ts",
+                            "file_path": "/home/<username>/myproject/src/routes/users.ts",
                             "content": "import { z } from 'zod';\n\nconst createUserSchema = z.object({...});"
                         }
                     }
@@ -243,7 +243,7 @@ def test_claude_code_parser_workspace_extraction(sample_claude_code_jsonl):
     parser = ClaudeCodeParser(sample_claude_code_jsonl)
     meta = parser.parse()
     
-    assert meta.workspace == "/home/user/myproject"
+    assert meta.workspace == "/home/<username>/myproject"
 
 
 def test_claude_code_parser_tool_calls(sample_claude_code_jsonl):
@@ -253,7 +253,7 @@ def test_claude_code_parser_tool_calls(sample_claude_code_jsonl):
     
     assert len(meta.tool_calls) == 2
     assert meta.tool_calls[0].tool == "Read"
-    assert meta.tool_calls[0].input_data["file_path"] == "/home/user/myproject/src/routes/users.ts"
+    assert meta.tool_calls[0].input_data["file_path"] == "/home/<username>/myproject/src/routes/users.ts"
     assert meta.tool_calls[1].tool == "Write"
 
 
@@ -272,7 +272,7 @@ def test_claude_code_parser_files_touched(sample_claude_code_jsonl):
     meta = parser.parse()
     
     assert len(meta.files_touched) == 1
-    assert "/home/user/myproject/src/routes/users.ts" in meta.files_touched
+    assert "/home/<username>/myproject/src/routes/users.ts" in meta.files_touched
 
 
 def test_claude_code_parser_languages(sample_claude_code_jsonl):
@@ -308,7 +308,7 @@ def test_claude_code_parser_aits_compliance(sample_claude_code_jsonl):
     # AITS Tier 2: Common
     assert aits_dict["tool"] == "claude"
     assert aits_dict["model"] == "claude-opus-4-5-20251101"
-    assert aits_dict["workspace"] == "/home/user/myproject"
+    assert aits_dict["workspace"] == "/home/<username>/myproject"
     
     # AITS Tier 3: Extended
     assert "tokens" in aits_dict

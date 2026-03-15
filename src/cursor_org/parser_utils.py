@@ -4,6 +4,7 @@ Common methods for extracting and analyzing transcript content.
 """
 import re
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Dict, List, Optional
 
 from .constants import (
@@ -102,6 +103,33 @@ def extract_topic_from_messages(messages: List[Dict], max_length: int = TOPIC_MA
             elif isinstance(content, str):
                 return content[:max_length].replace("\n", " ")
     return ""
+
+
+def extract_created_at(messages: List[Dict]) -> Optional[datetime]:
+    """Extract creation timestamp from first message with createdAt field.
+    
+    Args:
+        messages: List of message dictionaries
+        
+    Returns:
+        Datetime object or None if not found
+    """
+    for msg in messages:
+        created_at = msg.get("createdAt") or msg.get("created_at") or msg.get("timestamp")
+        if created_at:
+            try:
+                # Handle ISO 8601 format with Z suffix
+                if isinstance(created_at, str):
+                    # Replace 'Z' with '+00:00' for proper parsing
+                    created_at = created_at.replace('Z', '+00:00')
+                    return datetime.fromisoformat(created_at)
+                elif isinstance(created_at, (int, float)):
+                    # Unix timestamp
+                    return datetime.fromtimestamp(created_at)
+            except (ValueError, TypeError, OSError):
+                continue
+    
+    return None
 
 
 def extract_model_info(messages: List[Dict], limit: int = 10) -> Dict[str, Optional[str]]:

@@ -1,7 +1,7 @@
 """Export transcripts to various formats (markdown, json, html, cjson)."""
 
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List
 
@@ -48,7 +48,7 @@ def export_to_json(metadata: TranscriptMetadata, messages: List[Dict[str, Any]],
     export_data = {
         "metadata": metadata.to_aits_dict(),
         "messages": messages,
-        "exported_at": datetime.utcnow().isoformat() + "Z",
+        "exported_at": datetime.now(timezone.utc).isoformat(),
         "exporter": {
             "tool": "cursor-org",
             "version": "0.3.0",
@@ -70,7 +70,7 @@ def export_to_cjson(metadata: TranscriptMetadata, messages: List[Dict[str, Any]]
     cjson_data = {
         "version": "1.0",
         "standard": "CJSON",
-        "exported_at": datetime.utcnow().isoformat() + "Z",
+        "exported_at": datetime.now(timezone.utc).isoformat(),
         "source": {
             "ide": "Cursor",
             "tool": "cursor-transcript-organizer",

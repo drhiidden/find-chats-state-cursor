@@ -103,6 +103,11 @@ def search_dir(tmp_path):
         for msg in bug_messages:
             f.write(json.dumps(msg) + '\n')
     
+    # Create summary.md for bug fix
+    bug_summary_file = bug_dir / "summary.md"
+    with open(bug_summary_file, 'w', encoding='utf-8') as f:
+        f.write("# Bug Fix: Parser\n\nFixed bug in parser when handling empty messages.\n")
+    
     # Transcript 3: Unorganized (UUID folder)
     uuid_dir = tmp_path / "f1234567-89ab-cdef-0123-456789abcdef"
     uuid_dir.mkdir()
@@ -189,9 +194,9 @@ def test_search_with_date_filter(search_dir):
     )
     results = searcher.search_text("bug", options)
     
-    # Should find the bug fix transcript
-    assert len(results) >= 1
-    assert any("bug" in r.topic.lower() for r in results)
+    # Should find the bug fix transcript (March 12)
+    assert len(results) >= 1, f"Expected at least 1 result, got {len(results)}"
+    assert any("bug" in r.topic.lower() for r in results), f"No 'bug' in topics: {[r.topic for r in results]}"
 
 
 def test_search_date_range_exclusion(search_dir):
