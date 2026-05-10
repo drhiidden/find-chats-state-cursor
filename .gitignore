@@ -70,3 +70,8 @@ hilo-reddit-to-pubilcarme.md
 feature-cursor-transcript.md
 demo.py
 test_demo.py
+
+# Drafts / WIP posts (Reddit, HN, etc.)
+feature-*.md
+hilo-*.md
+*-to-pubilcarme.md
