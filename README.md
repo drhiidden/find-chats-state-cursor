@@ -39,6 +39,7 @@ Into:
 - **Recursive Organization**: Automatically finds and organizes nested transcripts (subagents)
 - **Cleanup Tools**: Remove empty folders (MCP, agent-tools, etc.) to keep workspace tidy
 - **Backup & Undo**: Automatic backups before destructive operations with easy restore
+- **Demo Generator**: `cursor-org demo` creates example folders for easy screenshots
 - **Flexible Architecture**: Decoupled collection and organization strategies for extensibility
 - **Auto Summaries**: Generates markdown summaries with statistics
 - **Batch Processing**: Organize hundreds of transcripts in seconds
@@ -63,6 +64,9 @@ Into:
 ```bash
 # List supported IDEs and their paths
 cursor-org list-ides
+
+# Generate demo folder for screenshots
+cursor-org demo  # Opens ./screenshots-demo/ automatically!
 ```
 
 ## 📦 Installation

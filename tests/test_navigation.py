@@ -13,28 +13,28 @@ from cursor_org.navigation import (
 
 def test_parse_project_name_simple():
     """Test parsing simple project names."""
-    name, context = parse_project_name("c-Users-druiz-Documents-Laboratorio-find-chats-state-cursor")
+    name, context = parse_project_name("c-Users-username-Documents-Projects-find-chats-state-cursor")
     assert "state-cursor" in name or "find-chats" in name
     assert context != ""
 
 
 def test_parse_project_name_workspace():
     """Test parsing code-workspace names."""
-    name, context = parse_project_name("c-Users-druiz-Documents-Laboratorio-haletheia-code-workspace")
+    name, context = parse_project_name("c-Users-username-Documents-Projects-myapp-code-workspace")
     assert "workspace" in name
-    assert "haletheia" in context or "code" in context
+    assert "myapp" in context or "code" in context
 
 
 def test_parse_project_name_workspace_json():
     """Test parsing workspace-json names."""
-    name, context = parse_project_name("c-Users-druiz-AppData-Roaming-Cursor-User-Workspaces-1773382579405-workspace-json")
+    name, context = parse_project_name("c-Users-username-AppData-Roaming-Cursor-User-Workspaces-1773382579405-workspace-json")
     assert "workspace-json" in name
     assert "Workspaces" in context or context != ""
 
 
 def test_parse_project_name_short():
     """Test parsing short project names."""
-    name, context = parse_project_name("c-Users-druiz-arch-dd")
+    name, context = parse_project_name("c-Users-username-arch-dd")
     assert name == "arch-dd"
 
 
@@ -63,7 +63,7 @@ def test_parse_project_name_edge_cases():
     assert name != ""
     
     # Many dashes
-    name, context = parse_project_name("c-Users-druiz-very-long-path-to-my-project-name")
+    name, context = parse_project_name("c-Users-username-very-long-path-to-my-project-name")
     assert name != ""
     
     # Single part

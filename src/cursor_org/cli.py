@@ -28,6 +28,7 @@ from .errors import (
     NoTranscriptsFoundError,
     format_error_message,
 )
+from .demo import generate_demo_folder
 
 app = typer.Typer(
     name="cursor-org",
@@ -978,6 +979,34 @@ def export(
         
     except Exception as e:
         console.print(f"[red]Export failed: {str(e)}[/red]")
+        raise typer.Exit(code=1)
+
+
+@app.command()
+def demo(
+    output: Optional[Path] = typer.Option(
+        None, "--output", "-o", help="Output directory for demo folder (default: ./screenshots-demo)"
+    ),
+):
+    """
+    Generate a demo folder with example organized transcripts for screenshots.
+    
+    Creates a clean folder structure showing:
+    - BEFORE: UUID folders (cryptic, hard to navigate)
+    - AFTER: Organized folders (readable names, summaries)
+    
+    Perfect for taking screenshots for README, presentations, or Reddit posts.
+    Automatically opens the folder in File Explorer (Windows/macOS/Linux).
+    
+    Example:
+        cursor-org demo
+        cursor-org demo --output ~/Desktop/demo
+    """
+    try:
+        output_path = generate_demo_folder(output)
+        console.print("[bold green]Demo folder ready for screenshots![/bold green]")
+    except Exception as e:
+        console.print(f"[red]Error creating demo folder:[/red] {e}")
         raise typer.Exit(code=1)
 
 

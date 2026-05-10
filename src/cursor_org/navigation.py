@@ -47,7 +47,7 @@ def parse_project_name(folder_name: str) -> tuple[str, str]:
     parts = name.split('-')
     
     # Skip common words
-    skip_words = {'c', 'C', 'Users', 'druiz', 'Documents', 'Laboratorio', 
+    skip_words = {'c', 'C', 'Users', 'username', 'Documents', 'Projects', 
                   'AppData', 'Local', 'Temp', 'Projects', 'Code'}
     
     significant_parts = [p for p in parts if p and p not in skip_words]
