@@ -64,10 +64,7 @@ scripts/
 # WORK IN PROGRESS / DRAFTS (not ready for OSS release)
 # ==============================================================================
 AGENTS.md
-docs/
 screenshots-demo/
-hilo-reddit-to-pubilcarme.md
-feature-cursor-transcript.md
 demo.py
 test_demo.py
 
