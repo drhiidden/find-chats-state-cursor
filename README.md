@@ -251,6 +251,8 @@ Shows:
 | `list-ides` | List supported IDEs | `cursor-org list-ides` |
 | `version` | Show version | `cursor-org version` |
 
+**HCP workflow:** [docs/OPSEC.md](./docs/OPSEC.md) · `@skill 06-meta/ecosystem-governance/cursor-sessions-review` (hcp-skills) · digest script `scripts/build-daily-cursor-digest.py --list-buckets`
+
 ### Recursive Organization
 
 The `organize` command supports recursive processing of nested transcripts (such as subagents):
