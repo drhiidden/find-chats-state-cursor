@@ -153,6 +153,16 @@ def organize(
     generate_summaries: bool = typer.Option(
         True, "--no-summaries", help="Generate summary.md for each transcript"
     ),
+    sync_sessions: bool = typer.Option(
+        False,
+        "--sync-sessions",
+        help="Export summaries to a local session journal (.session-journal/ or CURSOR_ORG_JOURNAL_ROOT)",
+    ),
+    journal_root: Optional[Path] = typer.Option(
+        None,
+        "--journal-root",
+        help="Root directory for session journal exports",
+    ),
     no_backup: bool = typer.Option(
         False, "--no-backup", help="Skip backup creation (advanced users only)"
     ),
@@ -170,6 +180,7 @@ def organize(
     from .organizer import organize_recursively
     from .parser import TranscriptParser
     from .summary import generate_summary, save_summary
+    from .integration import sync_to_session_journal
     from .backup import BackupManager
     from .collector import TranscriptCollector, FileFilter
 
@@ -268,6 +279,19 @@ def organize(
                         save_summary(summary_content, summary_path)
                         console.print(f"  [blue]{CLI_MSG_GENERATED_SUMMARY}[/blue]")
 
+                        # Optional session journal export
+                        if sync_sessions:
+                            try:
+                                journal_path = sync_to_session_journal(
+                                    summary_content,
+                                    result.metadata,
+                                    journal_root=journal_root,
+                                )
+                                console.print(
+                                    f"  [magenta]Journal:[/magenta] {journal_path.name}"
+                                )
+                            except FileNotFoundError as e:
+                                console.print(f"  [yellow]Warning:[/yellow] {e}")
                     except Exception as e:
                         console.print(
                             f"  [yellow]Warning:[/yellow] Failed to generate summary: {e}"
@@ -593,8 +617,13 @@ def search(
     query: str = typer.Argument(
         ..., help="Text to search for in transcripts"
     ),
-    path: Path = typer.Argument(
+    path: Optional[Path] = typer.Argument(
         None, help="Directory to search (defaults to current directory)"
+    ),
+    all_cursor: bool = typer.Option(
+        False,
+        "--all-cursor",
+        help="Search all Cursor project buckets under ~/.cursor/projects",
     ),
     date_from: str = typer.Option(
         None, "--date-from", help="Filter by start date (YYYY-MM-DD)"
@@ -634,17 +663,31 @@ def search(
         cursor-org search "auth" --tags security,api        # Filter by tags
         cursor-org search "error" --case-sensitive -v       # Case-sensitive with snippets
     """
-    from .search import TranscriptSearcher, SearchOptions
+    from .search import TranscriptSearcher, SearchOptions, SearchMatch
     from rich.progress import Progress, SpinnerColumn, TextColumn
     from datetime import datetime
     
-    # Use current directory if path not specified
-    if path is None:
-        path = Path.cwd()
-    
-    if not path.exists():
-        console.print(f"[red]Error:[/red] Path does not exist: {path}")
-        raise typer.Exit(code=1)
+    search_roots: list[Path] = []
+
+    if all_cursor:
+        from .navigation import iter_cursor_transcript_roots
+
+        search_roots = iter_cursor_transcript_roots()
+        if not search_roots:
+            console.print("[yellow]No Cursor transcript directories found.[/yellow]")
+            return
+        console.print(
+            f"[dim]Searching {len(search_roots)} Cursor bucket(s)...[/dim]"
+        )
+    elif path is None:
+        search_roots = [Path.cwd()]
+    else:
+        search_roots = [path]
+
+    for root in search_roots:
+        if not root.exists():
+            console.print(f"[red]Error:[/red] Path does not exist: {root}")
+            raise typer.Exit(code=1)
     
     # Parse dates
     date_from_obj = None
@@ -664,17 +707,16 @@ def search(
     if tags:
         tags_list = [t.strip() for t in tags.split(',')]
     
-    # Create searcher
-    searcher = TranscriptSearcher(path, ide=ide)
-    
-    # Search with progress indicator
+    # Create searcher(s) and aggregate results
+    all_results: list[SearchMatch] = []
+
     with Progress(
         SpinnerColumn(),
         TextColumn("[progress.description]{task.description}"),
         console=console,
     ) as progress:
         progress.add_task(description="Searching transcripts...", total=None)
-        
+
         options = SearchOptions(
             case_sensitive=case_sensitive,
             date_from=date_from_obj,
@@ -682,10 +724,24 @@ def search(
             tags=tags_list,
             organized_only=organized_only,
             context_lines=context,
-            limit=limit
+            limit=None if all_cursor else limit,
         )
-        
-        results = searcher.search_text(query, options)
+
+        for root in search_roots:
+            searcher = TranscriptSearcher(root, ide=ide)
+            all_results.extend(searcher.search_text(query, options))
+
+    # Sort newest first; apply global limit after merge
+    all_results.sort(
+        key=lambda r: (
+            r.metadata.created_at if r.metadata and r.metadata.created_at else datetime.min
+        ),
+        reverse=True,
+    )
+    if limit is not None:
+        all_results = all_results[:limit]
+
+    results = all_results
     
     # Display results
     if not results:
@@ -711,17 +767,27 @@ def search(
         if len(topic) > 50:
             topic = topic[:47] + "..."
         
-        # Get relative path
+        # Display path (bucket folder when searching all Cursor projects)
         try:
-            rel_path = result.transcript_path.relative_to(path)
+            if all_cursor:
+                rel_path = result.transcript_path
+                bucket = rel_path.parts[
+                    rel_path.parts.index("projects") + 1
+                ] if "projects" in rel_path.parts else rel_path.parent.name
+                display_path = bucket
+            else:
+                rel_path = result.transcript_path.relative_to(search_roots[0])
+                display_path = (
+                    str(rel_path.parent.name) if rel_path.parent.name else str(rel_path)
+                )
         except ValueError:
-            rel_path = result.transcript_path
+            display_path = str(result.transcript_path.parent.name)
         
         table.add_row(
             result.date_str,
             topic,
             str(result.match_count),
-            str(rel_path.parent.name) if rel_path.parent.name else str(rel_path)
+            display_path
         )
     
     console.print(table)

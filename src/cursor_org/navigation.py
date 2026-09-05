@@ -220,3 +220,18 @@ def create_shortcut(project_name: str, shortcut_name: Optional[str] = None) -> P
     console.print(f"[dim]Reload PowerShell or run: . $PROFILE[/dim]")
     
     return profile_path
+
+
+def iter_cursor_transcript_roots() -> List[Path]:
+    """Return agent-transcripts directories for every Cursor project bucket."""
+    projects_dir = get_cursor_projects_dir()
+    roots: List[Path] = []
+    if not projects_dir.is_dir():
+        return roots
+    for entry in sorted(projects_dir.iterdir()):
+        if not entry.is_dir():
+            continue
+        transcripts = entry / "agent-transcripts"
+        if transcripts.is_dir():
+            roots.append(transcripts)
+    return roots

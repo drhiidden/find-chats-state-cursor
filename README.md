@@ -59,7 +59,7 @@ Into:
 | **Claude Code** | ✅ Fully supported | Parser implemented, all features working |
 | **Continue.dev** | 🚧 Planned | Community contributions welcome |
 | **Cline** | 🚧 Planned | Formerly Claude-dev |
-| **Others** | 💡 Propose | [Open an issue](https://github.com/yourusername/cursor-transcript-organizer/issues) |
+| **Others** | 💡 Propose | [Open an issue](https://github.com/drhiidden/find-chats-state-cursor/issues) |
 
 ```bash
 # List supported IDEs and their paths
@@ -71,27 +71,20 @@ cursor-org demo  # Opens ./screenshots-demo/ automatically!
 
 ## 📦 Installation
 
-### Prerequisites
-- Python 3.10+
-- One of: Cursor IDE, Claude Code, Continue.dev, or compatible AI coding assistant
-
-### Install from source
+### PyPI (recommended)
 
 ```bash
-# Clone the repository
-git clone https://github.com/drhiidden/cursor-transcript-organizer.git
-cd cursor-transcript-organizer
+pip install cursor-transcript-organizer
+cursor-org --help
+```
 
-# Create virtual environment
-python -m venv .venv
+### From source
 
-# Activate (Windows)
-.venv\Scripts\activate
-
-# Activate (Unix/Mac)
-source .venv/bin/activate
-
-# Install in editable mode
+```bash
+git clone https://github.com/drhiidden/find-chats-state-cursor.git
+cd find-chats-state-cursor
+python3 -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e .
 ```
 
@@ -246,10 +239,29 @@ Shows:
 | `backups --delete <id>` | Delete a backup | `cursor-org backups --delete 1` |
 | `backups --cleanup` | Remove old backups | `cursor-org backups --cleanup` |
 | `stats` | Show statistics | `cursor-org stats path/to/transcripts` |
-| `search` | Search transcripts by text, date, or tags | `cursor-org search "authentication" /path/to/transcripts` |
+| `search` | Search transcripts by text, date, or tags | `cursor-org search "authentication" --all-cursor` |
 | `export` | Export to different formats | `cursor-org export chat.jsonl --format html` |
 | `list-ides` | List supported IDEs | `cursor-org list-ides` |
 | `version` | Show version | `cursor-org version` |
+
+**Privacy & workspace tips:** [docs/PRIVACY.md](./docs/PRIVACY.md)
+
+### Recommended workflow (session recall)
+
+Cursor stores **one transcript bucket per workspace root path**. The same repo opened via different paths creates **separate buckets** — this is normal.
+
+```bash
+# 1. List buckets
+cursor-org projects
+
+# 2. Cross-bucket search (preferred daily workflow)
+cursor-org search "authentication" --all-cursor
+
+# 3. Optional: readable names inside ONE bucket only
+cursor-org organize "$(cursor-org goto myproject)" --apply --no-recursive
+```
+
+Use **`search --all-cursor`** instead of mass **`organize`** when Recents/history feels fragmented. See [docs/PRIVACY.md](./docs/PRIVACY.md) § workspace fragmentation.
 
 ### Recursive Organization
 
@@ -274,8 +286,11 @@ cursor-org organize /path/to/transcripts --apply --no-recursive
 Find past conversations quickly by searching transcript content:
 
 ```bash
-# Simple text search
+# Simple text search (current directory)
 cursor-org search "authentication"
+
+# Cross-bucket search — all Cursor projects on this machine
+cursor-org search "JWT" --all-cursor
 
 # Search in specific directory
 cursor-org search "JWT" /path/to/transcripts
@@ -505,10 +520,9 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 📧 Contact
 
-- Issues: [GitHub Issues](https://github.com/yourusername/cursor-transcript-organizer/issues)
-- Discussions: [GitHub Discussions](https://github.com/yourusername/cursor-transcript-organizer/discussions)
+- Issues: [GitHub Issues](https://github.com/drhiidden/find-chats-state-cursor/issues)
+- Discussions: [GitHub Discussions](https://github.com/drhiidden/find-chats-state-cursor/discussions)
 
 ---
 
-**Status**: Pre-release (v0.3.0-beta)  
-**Note**: Currently in testing phase. Public release pending validation.
+**Status**: v0.3.2 (PyPI + GitHub) · CLI entrypoint: `cursor-org`
