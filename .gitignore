@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Editor
+.vscode/
+.idea/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ruff
+.ruff_cache/
+
+# Local development (not published on PyPI/git)
+.session-journal/
+
+# Development scripts - not for public release
+organize_daily.ps1
+organize_daily.sh
+scripts/
+
+# Cursor rules - personal configuration
+.cursor/rules/
+
+# ==============================================================================
+# WORK IN PROGRESS / DRAFTS (not ready for OSS release)
+# ==============================================================================
+AGENTS.md
+screenshots-demo/
+demo.py
+test_demo.py
+
+# Development benchmarks (local only — never commit machine paths)
+benchmark_results.json
+benchmark_results/
+hilo-*.md
+*-to-pubilcarme.md
