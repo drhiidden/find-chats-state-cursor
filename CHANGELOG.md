@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2026-08-27
+
+### Added
+- `cursor-org search --all-cursor` — search every Cursor project bucket
+- Session journal: `--sync-sessions`, `CURSOR_ORG_JOURNAL_ROOT`, `.session-journal/`
+- Public `docs/PRIVACY.md`
+
+### Changed
+- Public docs are IDE-agnostic (see `docs/PRIVACY.md`)
+
+## [0.3.2] - 2026-09-03
+
+### Fixed
+- Public docs: removed references to private workflows, unpublished stacks, and maintainer-only tooling from tracked markdown
+
+### Changed
+- `docs/OPSEC.md` is a redirect to `PRIVACY.md` only (no internal ecosystem names)
+
 ## [Unreleased]
 
 ### 🚧 Pre-Release Testing

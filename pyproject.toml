@@ -1,9 +1,25 @@
 [project]
 name = "cursor-transcript-organizer"
-version = "0.3.1"
-description = "CLI tool to organize, search, analyze, and export Cursor chat transcripts with rich metadata extraction and AITS v1.0 compliance"
+version = "0.3.2"
+description = "CLI to organize, search, analyze, and export Cursor & Claude Code chat transcripts (AITS v1.0)"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
 authors = [
-    {name = "drhiidden"},
+    { name = "Daniel Ruiz", email = "drhiidden@users.noreply.github.com" },
+]
+keywords = ["cursor", "claude-code", "transcript", "cli", "ai", "ide", "jsonl"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
 ]
 dependencies = [
     "typer>=0.9.0",
@@ -12,7 +28,12 @@ dependencies = [
     "pyyaml>=6.0",
     "jsonschema>=4.0.0",
 ]
-requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://github.com/drhiidden/find-chats-state-cursor"
+Repository = "https://github.com/drhiidden/find-chats-state-cursor"
+Issues = "https://github.com/drhiidden/find-chats-state-cursor/issues"
+Documentation = "https://github.com/drhiidden/find-chats-state-cursor#readme"
 
 [project.scripts]
 cursor-org = "cursor_org.cli:app"
