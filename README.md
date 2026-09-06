@@ -3,7 +3,7 @@
 <div align="center">
 
 [![PyPI](https://img.shields.io/pypi/v/cursor-transcript-organizer?label=PyPI)](https://pypi.org/project/cursor-transcript-organizer/)
-[![Visits](https://komarev.com/ghpvc/?username=drhiidden&repo=find-chats-state-cursor&label=README%20views&color=00ff88&style=flat-square)]()
+[![Visits](https://komarev.com/ghpvc/?username=haletheia-cursor-org&label=README%20views&color=00ff88&style=flat-square)]()
 
 **IDE-agnostic CLI** (`cursor-org`) — organize, search, and analyze AI coding assistant transcripts. Transform cryptic UUID folders into human-readable names with rich metadata.
 
