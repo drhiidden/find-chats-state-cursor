@@ -2,10 +2,9 @@
 
 **Languages:** English · [Español](docs/README.es.md)
 
-<div align="center">
+[![views](https://komarev.com/ghpvc/?username=drhiidden&repo=find-chats-state-cursor&label=views&color=0e75b6)](https://github.com/drhiidden/find-chats-state-cursor)
 
-[![PyPI](https://img.shields.io/pypi/v/cursor-transcript-organizer?label=PyPI)](https://pypi.org/project/cursor-transcript-organizer/)
-[![views](https://komarev.com/ghpvc/?username=lab-find-chats-cursor&label=views&color=0e75b6)](https://github.com/drhiidden/find-chats-state-cursor)
+<div align="center">
 
 **IDE-agnostic CLI** (`cursor-org`) — organize, search, and analyze AI coding assistant transcripts. Transform cryptic UUID folders into human-readable names with rich metadata.
 

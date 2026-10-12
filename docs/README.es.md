@@ -2,10 +2,9 @@
 
 **Idiomas:** [English](../README.md) · Español
 
-<div align="center">
+[![visitas](https://komarev.com/ghpvc/?username=drhiidden&repo=find-chats-state-cursor&label=visitas&color=0e75b6)](https://github.com/drhiidden/find-chats-state-cursor)
 
-[![PyPI](https://img.shields.io/pypi/v/cursor-transcript-organizer?label=PyPI)](https://pypi.org/project/cursor-transcript-organizer/)
-[![visitas](https://komarev.com/ghpvc/?username=lab-find-chats-cursor&label=visitas&color=0e75b6)](https://github.com/drhiidden/find-chats-state-cursor)
+<div align="center">
 
 **CLI agnóstico del IDE** (`cursor-org`) — organiza, busca y analiza transcripciones de asistentes de código. Convierte carpetas UUID en nombres legibles con metadatos.
 
