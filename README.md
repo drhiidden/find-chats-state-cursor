@@ -3,6 +3,7 @@
 **Languages:** English · [Español](docs/README.es.md)
 
 ![views](https://visitor-badge.laobi.icu/badge?page_id=drhiidden.find-chats-state-cursor&title=views&left_color=555&right_color=0e75b6)
+
 <div align="center">
 
 **IDE-agnostic CLI** (`cursor-org`) — organize, search, and analyze AI coding assistant transcripts. Transform cryptic UUID folders into human-readable names with rich metadata.
