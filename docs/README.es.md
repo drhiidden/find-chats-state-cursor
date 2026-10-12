@@ -2,7 +2,7 @@
 
 **Idiomas:** [English](../README.md) · Español
 
-![visitas](https://visitor-badge.laobi.icu/badge?page_id=drhiidden.find-chats-state-cursor&title=visitas&left_color=555&right_color=0e75b6)
+![visitas](https://komarev.com/ghpvc/?username=drhiidden&repo=find-chats-state-cursor&label=visitas&color=0e75b6)
 <div align="center">
 
 **CLI agnóstico del IDE** (`cursor-org`) — organiza, busca y analiza transcripciones de asistentes de código. Convierte carpetas UUID en nombres legibles con metadatos.
