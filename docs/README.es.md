@@ -1,6 +1,6 @@
 # Cursor Transcript Organizer
 
-**Idiomas:** [English](README.md) · Español
+**Idiomas:** [English](../README.md) · Español
 
 <div align="center">
 
@@ -49,7 +49,7 @@ Todo es **local**. No se suben transcripciones a la nube. Ver [docs/PRIVACY.md](
 | [docs/SEARCH_EXAMPLES.md](docs/SEARCH_EXAMPLES.md) | Ejemplos de búsqueda |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Contribuir |
 | [TROUBLESHOOTING.md](TROUBLESHOOTING.md) | Problemas frecuentes |
-| [CHANGELOG.md](CHANGELOG.md) | Cambios por versión |
+| [CHANGELOG.md](../CHANGELOG.md) | Cambios por versión |
 
 ## Licencia
 

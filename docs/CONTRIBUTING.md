@@ -21,4 +21,4 @@ pytest -q
 
 ## Code of conduct
 
-See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+See [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).

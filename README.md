@@ -1,6 +1,6 @@
 # Cursor Transcript Organizer
 
-**Languages:** English · [Español](README.es.md)
+**Languages:** English · [Español](docs/README.es.md)
 
 <div align="center">
 
@@ -82,10 +82,10 @@ cursor-org demo  # Opens ./screenshots-demo/ automatically!
 
 | Doc | Purpose |
 |-----|---------|
-| [README.es.md](README.es.md) | Spanish overview |
+| [docs/README.es.md](docs/README.es.md) | Spanish overview |
 | [docs/PRIVACY.md](docs/PRIVACY.md) | Local-only privacy |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Contribute |
-| [TROUBLESHOOTING.md](TROUBLESHOOTING.md) | Common issues |
+| [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | Contribute |
+| [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | Common issues |
 | [CHANGELOG.md](CHANGELOG.md) | Release history |
 
 ## 📦 Installation
