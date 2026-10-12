@@ -1,8 +1,11 @@
 # Cursor Transcript Organizer
 
+**Languages:** English · [Español](README.es.md)
+
 <div align="center">
 
 [![PyPI](https://img.shields.io/pypi/v/cursor-transcript-organizer?label=PyPI)](https://pypi.org/project/cursor-transcript-organizer/)
+[![views](https://komarev.com/ghpvc/?username=lab-find-chats-cursor&label=views&color=0e75b6)](https://github.com/drhiidden/find-chats-state-cursor)
 
 **IDE-agnostic CLI** (`cursor-org`) — organize, search, and analyze AI coding assistant transcripts. Transform cryptic UUID folders into human-readable names with rich metadata.
 
@@ -74,6 +77,16 @@ cursor-org list-ides
 # Generate demo folder for screenshots
 cursor-org demo  # Opens ./screenshots-demo/ automatically!
 ```
+
+## Documentation
+
+| Doc | Purpose |
+|-----|---------|
+| [README.es.md](README.es.md) | Spanish overview |
+| [docs/PRIVACY.md](docs/PRIVACY.md) | Local-only privacy |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Contribute |
+| [TROUBLESHOOTING.md](TROUBLESHOOTING.md) | Common issues |
+| [CHANGELOG.md](CHANGELOG.md) | Release history |
 
 ## 📦 Installation
 
